@@ -2,15 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: debian:stretch
-
+    - image: circleci/rust:1.39-buster
     steps:
-      - checkout
-
-      - run:
-          name: Greeting
-          command: echo Hello, world.
-
-      - run:
-          name: Print the Current Time
-          command: date
+    - checkout
+    - run:
+        name: Check
+        command: cargo check
