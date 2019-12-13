@@ -41,13 +41,10 @@ jobs:
           NAME=cl-to-cd_${CIRCLE_TAG}_linux_x86_64
           mkdir ${NAME}
           cp workspace/* ${NAME}
-          pushd ${NAME}
-          tar -czvf ${NAME}.tar.gz *
-          popd
+          tar -czvf ${NAME}.tar.gz ${NAME}/*
     - run:
         name: Publish
         command: |
-          NAME=cl-to-cd_${CIRCLE_TAG}_linux_x86_64
           if [[ ${CIRCLE_TAG} = *alpha* || ${CIRCLE_TAG} = *beta* ]]; then
             PRE=-prerelease
           else
@@ -58,7 +55,7 @@ jobs:
           -r ${CIRCLE_PROJECT_REPONAME} \
           -c ${CIRCLE_SHA1} \
           ${PRE} \
-          ${CIRCLE_TAG} ${NAME}/${NAME}.tar.gz
+          ${CIRCLE_TAG} *.tar.gz
 workflows:
     version: 2
     check:
