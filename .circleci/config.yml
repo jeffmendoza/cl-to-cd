@@ -29,7 +29,14 @@ jobs:
     steps:
     - run:
         name: Publish
-        command: ghr -u ${CIRCLE_USERNAME} ${CIRCLE_TAG}
+        command: >-
+          ghr
+          -u ${CIRCLE_PROJECT_USERNAME}
+          -r ${CIRCLE_PROJECT_REPONAME}
+          -c ${CIRCLE_SHA1}
+          -delete
+          -prerelease
+          ${CIRCLE_TAG}
 workflows:
     version: 2
     check:
