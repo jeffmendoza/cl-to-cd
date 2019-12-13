@@ -58,7 +58,7 @@ jobs:
           -r ${CIRCLE_PROJECT_REPONAME} \
           -c ${CIRCLE_SHA1} \
           ${PRE} \
-          ${CIRCLE_TAG} workspace/${NAME}.tar.gz
+          ${CIRCLE_TAG} ${NAME}/${NAME}.tar.gz
 workflows:
     version: 2
     check:
