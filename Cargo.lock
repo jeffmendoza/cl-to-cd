@@ -78,7 +78,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "cl-to-cd"
-version = "0.0.1"
+version = "0.0.1-alpha7"
 dependencies = [
  "json 0.11.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "reqwest 0.9.24 (registry+https://github.com/rust-lang/crates.io-index)",

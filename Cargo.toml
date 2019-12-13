@@ -3,7 +3,7 @@
 
 [package]
 name = "cl-to-cd"
-version = "0.0.1"
+version = "0.0.1-alpha7"
 authors = ["Jeff Mendoza <jemendoz@microsoft.com>"]
 edition = "2018"
 description = "Tools for querying ClearlyDefined for Rust projects using Cargo."
