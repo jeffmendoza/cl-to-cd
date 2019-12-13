@@ -5,6 +5,13 @@ jobs:
     - image: circleci/rust:1.39-buster
     steps:
     - checkout
+    - restore_cache:
+        key: project-cache
     - run:
         name: Check
         command: cargo check
+    - save_cache:
+        key: project-cache
+        paths:
+          - "~/.cargo"
+          - "./target"
