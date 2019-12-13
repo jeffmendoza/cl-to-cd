@@ -15,12 +15,31 @@ jobs:
         paths:
           - "~/.cargo"
           - "./target"
+  publish:
+    docker:
+    - image: debian:buster
+    steps:
+    - run:
+        name: Publish
+        command: echo Publish
 workflows:
     version: 2
     build:
       jobs:
-        - build:
-            filters:
-              branches:
-                only:
-                  - master
+      - build:
+          filters:
+            branches:
+              only:
+              - master
+            tags:
+              only:
+              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
+      - publish:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only:
+              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
