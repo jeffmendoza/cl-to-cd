@@ -29,7 +29,7 @@ jobs:
     steps:
     - run:
         name: Publish
-        command: ghr ${CIRCLE_TAG}
+        command: ghr -u ${CIRCLE_USERNAME} ${CIRCLE_TAG}
 workflows:
     version: 2
     check:
