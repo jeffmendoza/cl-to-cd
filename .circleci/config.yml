@@ -102,21 +102,21 @@ workflows:
               ignore: /.*/
             tags:
               only:
-              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
+              - /[0-9]+\.[0-9]+\.[0-9]+.*/
       - notice:
           filters:
             branches:
               ignore: /.*/
             tags:
               only:
-              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
+              - /[0-9]+\.[0-9]+\.[0-9]+.*/
       - build:
           filters:
             branches:
               ignore: /.*/
             tags:
               only:
-              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
+              - /[0-9]+\.[0-9]+\.[0-9]+.*/
       - publish:
           requires:
             - build
@@ -126,4 +126,4 @@ workflows:
               ignore: /.*/
             tags:
               only:
-              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
+              - /[0-9]+\.[0-9]+\.[0-9]+.*/
