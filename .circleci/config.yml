@@ -1,36 +1,49 @@
 version: 2
 jobs:
-  build:
+  check:
     docker:
     - image: circleci/rust:1.39-buster
     steps:
     - checkout
     - restore_cache:
-        key: project-cache
+        key: check-cache
     - run:
         name: Check
         command: cargo check
     - save_cache:
-        key: project-cache
+        key: check-cache
         paths:
           - "~/.cargo"
           - "./target"
+  build:
+    docker:
+    - image: circleci/rust:1.39-buster
+    steps:
+    - checkout
+    - run:
+        name: Build
+        command: RUSTFLAGS="-C link-arg=-s" cargo build --release
   publish:
     docker:
-    - image: debian:buster
+    - image: cibuilds/github:0.13
     steps:
     - run:
         name: Publish
-        command: echo Publish
+        command: ghr ${CIRCLE_TAG}
 workflows:
     version: 2
-    build:
+    check:
+      jobs:
+      - check:
+          filters:
+            branches:
+              only: master
+    build-and-publish:
       jobs:
       - build:
           filters:
             branches:
-              only:
-              - master
+              ignore: /.*/
             tags:
               only:
               - /v[0-9]+\.[0-9]+\.[0-9]+.*/
