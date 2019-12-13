@@ -39,6 +39,23 @@ jobs:
         command: |
           cargo login ${CRATES_TOKEN}
           cargo publish
+  notice:
+    docker:
+    - image: circleci/rust:1.39-buster
+    steps:
+    - checkout:
+    - run:
+        name: Install Tools
+        command: cargo install cl-to-cd
+    - run:
+        name: Generate Notice
+        command: cat Cargo.lock | cl-to-cd | cd-to-notice > notice.txt
+    - persist_to_workspace:
+        root: .
+        paths:
+        - notice.txt
+        - LICENSE
+        - README.md
   publish:
     docker:
     - image: cibuilds/github:0.13
@@ -83,6 +100,13 @@ workflows:
             tags:
               only:
               - /v[0-9]+\.[0-9]+\.[0-9]+.*/
+      - notice:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only:
+              - /v[0-9]+\.[0-9]+\.[0-9]+.*/
       - build:
           filters:
             branches:
@@ -93,6 +117,7 @@ workflows:
       - publish:
           requires:
             - build
+            - notice
           filters:
             branches:
               ignore: /.*/
