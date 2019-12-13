@@ -23,20 +23,42 @@ jobs:
     - run:
         name: Build
         command: RUSTFLAGS="-C link-arg=-s" cargo build --release
+    - persist_to_workspace:
+        root: target/release
+        paths:
+        - cd-to-csv
+        - cd-to-notice
+        - cl-to-cd
   publish:
     docker:
     - image: cibuilds/github:0.13
     steps:
+    - attach_workspace:
+        at: workspace
+    - run:
+        name: Tarball
+        command: |
+          NAME=cl-to-cd_${CIRCLE_TAG}_linux_x86_64
+          mkdir ${NAME}
+          cp workspace/* ${NAME}
+          pushd ${NAME}
+          tar -czvf ${NAME}.tar.gz *
+          popd
     - run:
         name: Publish
-        command: >-
-          ghr
-          -u ${CIRCLE_PROJECT_USERNAME}
-          -r ${CIRCLE_PROJECT_REPONAME}
-          -c ${CIRCLE_SHA1}
-          -delete
-          -prerelease
-          ${CIRCLE_TAG}
+        command: |
+          NAME=cl-to-cd_${CIRCLE_TAG}_linux_x86_64
+          if [[ ${CIRCLE_TAG} = *alpha* || ${CIRCLE_TAG} = *beta* ]]; then
+            PRE=-prerelease
+          else
+            PRE=
+          fi
+          ghr \
+          -u ${CIRCLE_PROJECT_USERNAME} \
+          -r ${CIRCLE_PROJECT_REPONAME} \
+          -c ${CIRCLE_SHA1} \
+          ${PRE} \
+          ${CIRCLE_TAG} workspace/${NAME}.tar.gz
 workflows:
     version: 2
     check:
