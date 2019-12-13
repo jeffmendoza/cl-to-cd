@@ -25,7 +25,7 @@ a "notice" file. For example, use in your CI system like this:
 
     cat Cargo.lock | cl-to-cd | cd-to-notice > notice.txt
 
-And bundle notice.txt with your distributions.
+And bundle `notice.txt` with your distributions.
 
 
 ## Also see
