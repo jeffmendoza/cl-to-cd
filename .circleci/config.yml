@@ -49,7 +49,7 @@ jobs:
     - checkout:
     - run:
         name: Install Tools
-        command: cargo install cl-to-cd --version 0.0.1-alpha7
+        command: cargo install cl-to-cd
     - run:
         name: Generate Notice
         command: cat Cargo.lock | cl-to-cd | cd-to-notice > notice.txt
