@@ -3,6 +3,12 @@
 These tools allow querying [ClearlyDefined](https://docs.clearlydefined.io/)
 for information about packages found in Cargo.lock.
 
+## Install
+
+    cargo install cl-to-cd
+
+Also, binaries are attached to [GitHub Releases](https://github.com/jeffmendoza/cl-to-cd/releases)
+
 ## cl-to-cd
 
 This tool takes a Cargo.lock on stdin, and outputs an array of coordinates in
@@ -27,6 +33,10 @@ a "notice" file. For example, use in your CI system like this:
 
 And bundle `notice.txt` with your distributions.
 
+## Example
+
+The [Circle CI config](https://github.com/jeffmendoza/cl-to-cd/blob/master/.circleci/config.yml#L55)
+on this repo generates a notice.txt and includes it in the binary zip attached to the GitHub Releases.
 
 ## Also see
 
